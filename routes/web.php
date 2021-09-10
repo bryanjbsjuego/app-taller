@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,3 +29,19 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Especialidades 
+//Regresan vistas
+Route::get('/specialties', [App\Http\Controllers\SpecialityController::class, 'index']);
+Route::get('/specialties/create', [App\Http\Controllers\SpecialityController::class, 'create']); //Formulario de registro
+Route::get('/specialties/{specialty}/edit', [App\Http\Controllers\SpecialityController::class, 'edit']);
+
+Route::post('/specialties', [App\Http\Controllers\SpecialityController::class, 'store']); //envío de formulario de registro
+Route::put('/specialties/{specialty}', [App\Http\Controllers\SpecialityController::class, 'update']);
+Route::delete('/specialties/{specialty}', [App\Http\Controllers\SpecialityController::class, 'destroy']);
+
+//Doctores
+
+Route::resource('doctors',  App\Http\Controllers\DoctorController::class);
+
+//Pacientes
