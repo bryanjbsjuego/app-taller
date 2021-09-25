@@ -30,18 +30,23 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Especialidades 
-//Regresan vistas
-Route::get('/specialties', [App\Http\Controllers\SpecialityController::class, 'index']);
-Route::get('/specialties/create', [App\Http\Controllers\SpecialityController::class, 'create']); //Formulario de registro
-Route::get('/specialties/{specialty}/edit', [App\Http\Controllers\SpecialityController::class, 'edit']);
 
-Route::post('/specialties', [App\Http\Controllers\SpecialityController::class, 'store']); //envío de formulario de registro
-Route::put('/specialties/{specialty}', [App\Http\Controllers\SpecialityController::class, 'update']);
-Route::delete('/specialties/{specialty}', [App\Http\Controllers\SpecialityController::class, 'destroy']);
+Route::middleware(['auth', 'admin'])->namespace('App\Http\Controllers\Admin')->group(function () {
+    // Especialidades 
 
-//Doctores
+    Route::resource('specialties', \SpecialityController::class);
 
-Route::resource('doctors',  App\Http\Controllers\DoctorController::class);
+    //Doctores
 
-//Pacientes
+    Route::resource('doctors',  \DoctorController::class);
+
+    //Pacientes
+
+    Route::resource('patients',  \PatientController::class);
+});
+
+Route::middleware(['auth', 'doctor'])->namespace('App\Http\Controllers\Doctor')->group(function () {
+    
+    Route::resource('schelude',  \ScheludeController::class);
+});
+
